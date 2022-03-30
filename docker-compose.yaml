@@ -1,0 +1,17 @@
+services:
+  database_nosql:
+    container_name: mongodb
+    #image: mongo:latest
+    build:
+      context: ./mongo-custom
+      #args:
+      #  - MYSQL_VERSION=${MYSQL_VERSION}
+    #environment:
+    #  MONGO_INITDB_ROOT_USERNAME: root
+    #  MONGO_INITDB_ROOT_PASSWORD: example
+  mongo-explorer:
+    container_name: mongo-explorer
+    image: adicom/admin-mongo
+    ports:
+      - 1234:1234
+  
