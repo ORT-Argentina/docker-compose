@@ -1,42 +1,62 @@
 version: "3.3"
 
 services:
-  database_nosql:
-    container_name: mongodb
-    #image: mongo:latest
-    build:
-      context: ./mongo-custom
+  ubuntu-prueba:
+    container_name: ubuntu-test
+    image: ubuntu:20.04
+    tty: true
+  mongo:
+    container_name: nosql
+    image: mongo:latest
     ports:
       - 27017:27017
-      #args:
-      #  - MYSQL_VERSION=${MYSQL_VERSION}
-    #environment:
-    #  MONGO_INITDB_ROOT_USERNAME: root
-    #  MONGO_INITDB_ROOT_PASSWORD: example
-  mongo-explorer:
-    container_name: mongo-explorer
-    image: adicom/admin-mongo
+  node:
+    container_name: node8
+    image: node:8
     ports:
-      - 1234:1234
-  postgresdb:
-    container_name: postgresdb
-    image: postgres:11.15
-    environment:
-      - POSTGRES_PASSWORD=${PASSWORD_ADMIN}
-    ports:
-      - 5432:5432
-    #volumes:
-    #- ${DATA_PATH_HOST}/postgres:/var/lib/postgresql/data/
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4:latest
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      - 3001:3000
     volumes:
-      - db-data:/root/.pgadmin
-    ports:
-      - "${PGADMIN_PORT:-5050}:80"
+      - ./project/node-hello:/app
+    working_dir: "/app"
+    command: "npm run start"
 
-volumes:
-  db-data:
+#  database_nosql:
+#    container_name: mongodb
+#    #image: mongo:latest
+#    build:
+#      context: ./mongo-custom
+#    ports:
+#      - 27017:27017
+#      #args:
+#      #  - MYSQL_VERSION=${MYSQL_VERSION}
+#    #environment:
+#    #  MONGO_INITDB_ROOT_USERNAME: root
+#    #  MONGO_INITDB_ROOT_PASSWORD: example
+##  mongo-explorer:
+#    container_name: mongo-explorer
+#    image: adicom/admin-mongo
+#    ports:
+#      - 1234:1234
+##  postgresdb:
+#    container_name: postgresdb
+#    image: postgres:11.15
+#    environment:
+#      - POSTGRES_PASSWORD=${PASSWORD_ADMIN}
+#    ports:
+#      - 5432:5432
+#    #volumes:
+#    #- ${DATA_PATH_HOST}/postgres:/var/lib/postgresql/data/
+##  pgadmin:
+#    container_name: pgadmin
+#    image: dpage/pgadmin4:latest
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+#      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+#    volumes:
+#      - db-data:/root/.pgadmin
+#    ports:
+#      - "${PGADMIN_PORT:-5050}:80"
+#
+
+#volumes:
+#  db-data:
